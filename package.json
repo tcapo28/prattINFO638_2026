@@ -9,5 +9,10 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+
+"scripts": {
+    "start": "node bookedin.js",
+    "dev": "nodemon bookedin.js"
+}
 }
