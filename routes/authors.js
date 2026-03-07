@@ -8,18 +8,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/form', function(req, res, next) {
-  res.render('authors/form', { title: 'BookedIn || Authors', author: author, authorIndex: authorIndex });
-});
-
-router.post('/create', async (req, res, next) => {
-  console.log('body: ' + JSON.stringify(req.body))
-  Author.add(req.body);
-  res.redirect(303, '/authors')
+  res.render('authors/form', { title: 'BookedIn || Authors'});
 });
 
 router.post('/upsert', async (req, res, next) => {
   console.log('body: ' + JSON.stringify(req.body));
   Author.upsert(req.body);
+    let createdOrupdated = req.body.id ? 'updated' : 'created';
+    req.session.flash = {
+    type: 'info',
+    intro: 'Success!',
+    message: `the author has been ${createdOrupdated}!`,
+  };
   res.redirect(303, '/authors');
 });
 

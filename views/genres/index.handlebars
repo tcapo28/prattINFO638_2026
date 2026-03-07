@@ -7,12 +7,12 @@
         <li><a href="/genres">Genres</a></li>
       </ul>
     </nav>
-<h1>Books</h1>
-<a href="/books/form">Create a new book</a>
-{{#each books}}
+<h1>Genres</h1>
+<a href="/genres/form">Create a new genre</a>
+{{#each genres}}
 <li>
-  <a href="/books/show/{{@index}}">{{@index}} - {{this.title}} - {{this.publishingYear}}</a>
-  <a href="/books/edit?id={{@index}}">edit</a>
+    {{@index}} - {{this.name}}
+    <a href="/genres/edit?id={{@index}}">edit</a>
 </li>
 {{/each}}
 </body>
