@@ -2,7 +2,6 @@ const genres = [
     {name: "Fantasy"},
     {name: "Science Fiction"},
 ]
-
 exports.all = genres;
 
 exports.add = (genre) => {

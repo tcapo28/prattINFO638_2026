@@ -1,10 +1,10 @@
-<h1>{{book.title}}</h1>
+<body>
+  <h1>{{book.title}}</h1>
 {{#if authors}}
-<ul>
-    {{#each authors}}
-<p>Written by {{author.firstName}} {{author.lastName}}</p>
+ Written by {{#each authors}}{{this.firstName}} {{this.lastName}}{{#unless @last}}, {{/unless}}{{/each}}
 {{/if}}
 <p>
-  Originally published in {{book.publishingYear}}
+  Originally published in {{book.yearPublished}}
 </p>
+<p> Genre: {{genre.name}}</p>
 </body>

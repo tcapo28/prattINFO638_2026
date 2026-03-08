@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
 const Author = require('../models/author');
+const Genre = require('../models/genre');
 
 router.get('/', function(req, res, next) {
   const books = Book.all
@@ -21,22 +22,28 @@ router.post('/upsert', async (req, res, next) => {
 });
 
 router.get('/form', async (req, res, next) => {
-  res.render('books/form', { title: 'BookedIn || Books', authors: Author.all });
+  res.render('books/form', { title: 'BookedIn || Books', authors: Author.all, genres: Genre.all });
 });
+
 router.get('/edit', async (req, res, next) => {
   let bookIndex = req.query.id;
   let book = Book.get(bookIndex);
-  res.render('books/form', { title: 'BookedIn || Books', book: book, bookIndex: bookIndex, authors: Author.all });
+  res.render('books/form', { title: 'BookedIn || Books', book: book, bookIndex: bookIndex, authors: Author.all, genres: Genre.all });
 });
-
+  
 router.get('/show/:id', async (req, res, next) => {
-  let bookIdx = req.params.id;
-  let book = Book.get(bookIdx);
-  let author = Author.get(book.authorId);
-  let authors = book.authorIds.map(Author.get)
-  res.render('books/show', {title: 'BookedIn || Book', book: book, bookIdx: bookIdx, author: author})
+  var templateVars = {
+    title: "BookedIn || show",
+    book: Book.get(req.params.id)
+  }
+if (templateVars.book.authorIds) {
+    templateVars['authors'] = templateVars.book.authorIds.map((authorId) => Author.get(authorId))
+  }
+  if ("genreId" in templateVars.book) {
+    templateVars['genre'] = Genre.get(templateVars.book.genreId);
+  }
+  res.render('books/show', templateVars);
 });
-
 
 module.exports = router;
 
